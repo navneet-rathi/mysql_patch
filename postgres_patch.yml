@@ -4,7 +4,7 @@
   tasks:
 
     - name: validate if Postgres is installed
-      ansible.builtin.command: "rpm -qa |grep postgresql"
+      ansible.builtin.command: "rpm -qa |grep postgresql15"
       register: postgres_check
       ignore_errors: yes
 
@@ -21,8 +21,7 @@
         - python3-psycopg2
         - psycopg2-binary
         - pytest
-        - pytest-mock
-        
+        - pytest-mock      
       when: postgres_check.rc == 0
 
     - name: Get Postgres version information
