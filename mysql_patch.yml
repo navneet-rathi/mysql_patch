@@ -12,7 +12,7 @@
       ansible.builtin.debug:
         msg: "MySQL is not installed on this host. Skipping patching."
       when: mysql_check.rc != 0
-      
+
     - name: Install python mysql dependencies
       ansible.builtin.dnf:
         name: python3-PyMySQL
@@ -38,7 +38,7 @@
         dest: "/tmp/mysql84-community-release-el9-3.noarch.rpm"
         headers:
           User-Agent: "Mozilla/5.0"
-        status_code: 200
+        #status_code: 200
 
     - name: Update the DNF package cache
       ansible.builtin.dnf:
