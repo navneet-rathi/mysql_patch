@@ -1,7 +1,7 @@
 ---
 
 - name: MySQL Database Operations
-  hosts: db_servers
+  hosts: all
   tasks:
     - name: copy the dumper script to the remote host
       ansible.builtin.copy:
