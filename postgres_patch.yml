@@ -15,7 +15,7 @@
 
     - name: Install python postgres dependencies
       ansible.builtin.dnf:
-        name: {{ item }}
+        name: "{{ item }}"
         state: present
       loop:
         - python3-psycopg2
