@@ -38,6 +38,7 @@
         dest: "/tmp/mysql84-community-release-el9-3.noarch.rpm"
         headers:
           User-Agent: "Mozilla/5.0"
+        force: yes  
         #status_code: 200
 
     - name: Update the DNF package cache
