@@ -45,6 +45,7 @@
       ansible.builtin.dnf:
         name: "/tmp/mysql84-community-release-el9-3.noarch.rpm"
         state: present
+        disable_gpg_check: yes
 
     - name: Update the DNF package cache
       ansible.builtin.dnf:
