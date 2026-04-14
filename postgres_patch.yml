@@ -28,7 +28,7 @@
         #login_user: root
         #login_password: "{{ mysql_root_password }}"
         # Use the socket to avoid "protocol mismatch" errors
-        login_unix_socket: /var/run/postgresql/.s.PGSQL.5432 
+        login_unix_socket: /var/run/postgresql/ 
       when: postgres_check.rc == 0 
       register: postgres_server_info   
 
