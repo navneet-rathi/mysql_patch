@@ -17,10 +17,11 @@
       community.mysql.mysql_info:
         filter: version
         login_user: root
-        login_password: "{{ mysql_root_password }}"
+        # login_password: "{{ mysql_root_password }}"
         # Use the socket to avoid "protocol mismatch" errors
         login_unix_socket: /var/lib/mysql/mysql.sock 
       register: mysql_server_info   
+
     - name: Debug MySQL version information
       ansible.builtin.debug:
         msg: "MySQL version: {{ mysql_server_info.version.full }}"
