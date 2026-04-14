@@ -54,7 +54,8 @@
     - name: Update MySQL packages
       ansible.builtin.dnf:
         name: mysql-community-server
-        state: present
+        state: latest
+        disable_gpg_check: yes
     
     - name: Restart MySQL
       service:
