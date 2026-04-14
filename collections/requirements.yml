@@ -1,5 +1,6 @@
-- collections:
-    - name: ansible.builtin
-    - name: community.mysql
-    - name: ansible.posix
-    - name: community.general
+--- 
+collections:
+  - name: ansible.builtin
+  - name: community.mysql
+  - name: ansible.posix
+  - name: community.general
