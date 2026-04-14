@@ -39,7 +39,7 @@
         headers:
           User-Agent: "Mozilla/5.0"
         force: yes  
-        #status_code: 200
+        status_code: 304
 
     - name: Update the DNF package cache
       ansible.builtin.dnf:
