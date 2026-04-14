@@ -2,6 +2,17 @@
 - hosts: all
   become: yes
   tasks:
+
+    - name: validate if MySQL is installed
+      ansible.builtin.command: "rpm -q mysql-server"
+      register: mysql_check
+      ignore_errors: yes
+
+    - name: MySQL is not installed, skipping patching
+      ansible.builtin.debug:
+        msg: "MySQL is not installed on this host. Skipping patching."
+      when: mysql_check.rc != 0
+        
     - name: Download MySQL 8.4 repo for RHEL 9
       ansible.builtin.uri:
         url: "https://repo.mysql.com/mysql84-community-release-el9-3.noarch.rpm"
