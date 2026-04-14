@@ -39,7 +39,9 @@
         headers:
           User-Agent: "Mozilla/5.0"
         force: yes  
-        status_code: 304
+        status_code:
+          - 200
+          - 304 
 
     - name: Install Mysql repo
       ansible.builtin.dnf:
