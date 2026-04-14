@@ -19,7 +19,7 @@
 
     - name: Dump an existing database to a file
       community.mysql.mysql_db:
-        name: my_existing_db
+        name: my_new_db
         state: dump
         target: /tmp/my_db_backup.sql
         login_user: root
