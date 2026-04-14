@@ -1,0 +1,26 @@
+---
+
+- name: MySQL Database Operations
+  hosts: db_servers
+  tasks:
+    - name: copy the dumper script to the remote host
+      ansible.builtin.copy:
+        src: my_db_backup.sql
+        dest: /tmp/my_db_backup.sql
+        mode: '0755'
+
+    - name: Create a new database
+      community.mysql.mysql_db:
+        name: my_new_db
+        state: present
+        login_user: root
+
+        # login_password: "{{ mysql_root_password }}"
+
+    - name: Dump an existing database to a file
+      community.mysql.mysql_db:
+        name: my_existing_db
+        state: dump
+        target: /tmp/my_db_backup.sql
+        login_user: root
+        # login_password: "{{ mysql_root_password }}"
