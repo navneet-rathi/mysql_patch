@@ -45,15 +45,15 @@
         force: yes  
         # status_code: 304
 
-    # - name: Install Postgres repo
-    #   ansible.builtin.dnf:
-    #     name: "/tmp/pgdg-redhat-repo-latest.noarch.rpm"
-    #     state: present
-    #     disable_gpg_check: yes
+    - name: Install Postgres repo
+      ansible.builtin.dnf:
+        name: "/tmp/pgdg-redhat-repo-latest.noarch.rpm"
+        state: present
+        disable_gpg_check: yes
 
-    # - name: Update the DNF package cache
-    #   ansible.builtin.dnf:
-    #     update_cache: yes
+    - name: Update the DNF package cache
+      ansible.builtin.dnf:
+        update_cache: yes
 
     # - name: Update Postgres packages
     #   ansible.builtin.dnf:
