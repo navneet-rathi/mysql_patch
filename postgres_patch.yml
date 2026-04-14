@@ -58,26 +58,27 @@
       ansible.builtin.dnf:
         update_cache: yes
 
-    # - name: Update Postgres packages
-    #   ansible.builtin.dnf:
-    #     name: postgresql15-server
-    #     state: latest
-    #     disable_gpg_check: yes
+    - name: Update Postgres packages
+      ansible.builtin.dnf:
+        name: postgresql15-server
+        state: latest
+        disable_gpg_check: yes
     
-    # - name: Restart Postgres
-    #   service:
-    #     name: postgresql-15
-    #     state: restarted
+    - name: Restart Postgres
+      service:
+        name: postgresql-15
+        state: restarted
 
-    # - name: Get Postgres version information after patching
-    #   community.postgresql.postgresql_info:
-    #     filter: version
-    #     #login_user: root
-    #     #login_password: "{{ mysql_root_password }}"
-    #     # Use the socket to avoid "protocol mismatch" errors
-    #     login_unix_socket: /var/lib/postgresql/data/postgresql.sock 
-    #   register: postgres_server_info   
+    - name: Get Postgres version information
+      community.postgresql.postgresql_info:
+        filter: version
+        #login_user: root
+        #login_password: "{{ mysql_root_password }}"
+        # Use the socket to avoid "protocol mismatch" errors
+        login_unix_socket: /var/run/postgresql/ 
+      when: postgres_check.rc == 0 
+      register: postgres_server_info   
 
-    # - name:  Postgres version information
-    #   ansible.builtin.debug:
-    #     msg: "Postgres version: {{ postgres_server_info.version.full }}"
+    - name:  Postgres version information
+      ansible.builtin.debug:
+        msg: "Postgres version: {{ postgres_server_info.version.full }}"
