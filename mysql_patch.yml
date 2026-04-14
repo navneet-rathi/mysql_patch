@@ -53,7 +53,7 @@
 
     - name: Update MySQL packages
       ansible.builtin.dnf:
-        name: mysql-server>=8.4
+        name: mysql-community-server>=8.4
         state: present
       notify:
         - Restart MySQL
