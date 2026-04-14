@@ -36,14 +36,14 @@
       ansible.builtin.debug:
         msg: "Postgres version: {{ postgres_server_info.version.full }}"
 
-    # - name: Download Postgres repo for RHEL 9
-    #   ansible.builtin.uri:
-    #     url: "https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-aarch64/pgdg-redhat-repo-latest.noarch.rpm"
-    #     dest: "/tmp/pgdg-redhat-repo-latest.noarch.rpm"
-    #     headers:
-    #       User-Agent: "Mozilla/5.0"
-    #     force: yes  
-    #     status_code: 304
+    - name: Download Postgres repo for RHEL 9
+      ansible.builtin.uri:
+        url: "https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-aarch64/pgdg-redhat-repo-latest.noarch.rpm"
+        dest: "/tmp/pgdg-redhat-repo-latest.noarch.rpm"
+        headers:
+          User-Agent: "Mozilla/5.0"
+        force: yes  
+        # status_code: 304
 
     # - name: Install Postgres repo
     #   ansible.builtin.dnf:
