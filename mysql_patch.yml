@@ -41,6 +41,11 @@
         force: yes  
         status_code: 304
 
+    - name: Download MySQL 8.4 repo for RHEL 9
+      ansible.builtin.dnf:
+        name: "/tmp/mysql84-community-release-el9-3.noarch.rpm"
+        state: present
+
     - name: Update the DNF package cache
       ansible.builtin.dnf:
         update_cache: yes
