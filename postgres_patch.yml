@@ -28,7 +28,7 @@
         #login_user: root
         #login_password: "{{ mysql_root_password }}"
         # Use the socket to avoid "protocol mismatch" errors
-        login_unix_socket: /var/lib/postgresql/data/postgresql.sock 
+        login_unix_socket: /tmp/postgresql.sock 
       register: postgres_server_info   
 
     - name: Debug Postgres version information
