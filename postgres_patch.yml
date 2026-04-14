@@ -42,7 +42,10 @@
         dest: "/tmp/pgdg-redhat-repo-latest.noarch.rpm"
         headers:
           User-Agent: "Mozilla/5.0"
-        force: yes  
+        force: yes 
+        status_code:
+          - 200
+          - 304 
         # status_code: 304
 
     - name: Install Postgres repo
