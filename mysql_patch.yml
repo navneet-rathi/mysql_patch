@@ -1,0 +1,28 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Download MySQL 8.4 repo for RHEL 9
+      ansible.builtin.uri:
+        url: "https://repo.mysql.com/mysql84-community-release-el9-3.noarch.rpm"
+        dest: "/tmp/mysql84-community-release-el9-3.noarch.rpm"
+        headers:
+          User-Agent: "Mozilla/5.0"
+        status_code: 200
+
+    - name: Update the DNF package cache
+      ansible.builtin.dnf:
+        update_cache: yes
+
+  #   - name: Update MySQL packages
+  #     ansible.builtin.dnf:
+  #       name: mysql-server
+  #       state: present
+  #     notify:
+  #       - Restart MySQL
+
+  # handlers:
+  #   - name: Restart MySQL
+  #     service:
+  #       name: mysql
+  #       state: restarted
