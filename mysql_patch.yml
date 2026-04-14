@@ -4,7 +4,7 @@
   tasks:
 
     - name: validate if MySQL is installed
-      ansible.builtin.command: "rpm -q mysql-server"
+      ansible.builtin.command: "rpm -q mysql"
       register: mysql_check
       ignore_errors: yes
 
