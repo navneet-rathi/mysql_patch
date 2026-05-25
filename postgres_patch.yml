@@ -2,7 +2,6 @@
 - hosts: all
   become: yes
   tasks:
-
     - name: validate if Postgres is installed
       ansible.builtin.command: "rpm -qa |grep postgresql15"
       register: postgres_check

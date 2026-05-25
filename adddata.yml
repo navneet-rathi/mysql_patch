@@ -12,9 +12,10 @@
     - name: Create a new database
       community.mysql.mysql_db:
         name: my_new_db
-        state: present
         login_user: root
-
+        login_password: "{{ mysql_root_password }}"
+        state: present
+     
         # login_password: "{{ mysql_root_password }}"
 
     - name: Dump an existing database to a file
@@ -23,4 +24,4 @@
         state: dump
         target: /tmp/my_db_backup.sql
         login_user: root
-        # login_password: "{{ mysql_root_password }}"
+        login_password: "{{ mysql_root_password }}"
