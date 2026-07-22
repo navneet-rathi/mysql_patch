@@ -1,11 +1,12 @@
 ---
-- hosts: all
-  become: yes
+- name: Postgres patching playbook
+  hosts: all
+  become: true
   tasks:
-    - name: validate if Postgres is installed
+    - name: Validate if Postgres is installed
       ansible.builtin.command: "rpm -qa |grep postgresql15"
       register: postgres_check
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Postgres is not installed, skipping patching
       ansible.builtin.debug:
@@ -18,7 +19,7 @@
         state: present
       loop:
         - python3-psycopg2
-        - pytest  
+        - pytest
       when: postgres_check.rc == 0
 
     - name: Get Postgres version information
@@ -28,8 +29,8 @@
         #login_password: "{{ mysql_root_password }}"
         # Use the socket to avoid "protocol mismatch" errors
         login_unix_socket: /var/run/postgresql/ 
-      when: postgres_check.rc == 0 
-      register: postgres_server_info   
+      when: postgres_check.rc == 0
+      register: postgres_server_info
 
     - name: Debug Postgres version information
       ansible.builtin.debug:
@@ -41,43 +42,40 @@
         dest: "/tmp/pgdg-redhat-repo-latest.noarch.rpm"
         headers:
           User-Agent: "Mozilla/5.0"
-        force: yes 
+        force: yes
         status_code:
           - 200
-          - 304 
+          - 304
         # status_code: 304
 
     - name: Install Postgres repo
       ansible.builtin.dnf:
         name: "/tmp/pgdg-redhat-repo-latest.noarch.rpm"
         state: present
-        disable_gpg_check: yes
+        disable_gpg_check: true
 
     - name: Update the DNF package cache
       ansible.builtin.dnf:
-        update_cache: yes
+        update_cache: true
 
     - name: Update Postgres packages
       ansible.builtin.dnf:
         name: postgresql15-server
-        state: latest
-        disable_gpg_check: yes
-    
+        state: present
+        disable_gpg_check: true
+
     - name: Restart Postgres
-      service:
+      ansible.builtin.service:
         name: postgresql-15
         state: restarted
 
     - name: Get Postgres version information
       community.postgresql.postgresql_info:
         filter: version
-        #login_user: root
-        #login_password: "{{ mysql_root_password }}"
-        # Use the socket to avoid "protocol mismatch" errors
-        login_unix_socket: /var/run/postgresql/ 
-      when: postgres_check.rc == 0 
-      register: postgres_server_info   
+        login_unix_socket: /var/run/postgresql/
+      when: postgres_check.rc == 0
+      register: postgres_server_info
 
-    - name:  Postgres version information
+    - name: Postgres version information
       ansible.builtin.debug:
         msg: "Postgres version: {{ postgres_server_info.version.full }}"
