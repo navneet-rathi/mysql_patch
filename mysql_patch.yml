@@ -1,12 +1,12 @@
 ---
-- hosts: all
-  become: yes
+- name: Patch MySQL
+  hosts: all
+  become: true
   tasks:
-
-    - name: validate if MySQL is installed
+    - name: Validate if MySQL is installed
       ansible.builtin.command: "rpm -qa |grep mysql-community-server"
       register: mysql_check
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: MySQL is not installed, skipping patching
       ansible.builtin.debug:
@@ -25,8 +25,8 @@
         login_user: root
         login_password: "{{ mysql_root_password }}"
         # Use the socket to avoid "protocol mismatch" errors
-        login_unix_socket: /var/lib/mysql/mysql.sock 
-      register: mysql_server_info   
+        login_unix_socket: "/var/lib/mysql/mysql.sock"
+      register: mysql_server_info
 
     - name: Debug MySQL version information
       ansible.builtin.debug:
@@ -38,29 +38,29 @@
         dest: "/tmp/mysql84-community-release-el9-3.noarch.rpm"
         headers:
           User-Agent: "Mozilla/5.0"
-        force: yes  
+        force: yes
         status_code:
           - 200
-          - 304 
+          - 304
 
     - name: Install Mysql repo
       ansible.builtin.dnf:
         name: "/tmp/mysql84-community-release-el9-3.noarch.rpm"
         state: present
-        disable_gpg_check: yes
+        disable_gpg_check: true
 
     - name: Update the DNF package cache
       ansible.builtin.dnf:
-        update_cache: yes
+        update_cache: true
 
     - name: Update MySQL packages
       ansible.builtin.dnf:
         name: mysql-community-server
-        state: latest
-        disable_gpg_check: yes
-    
+        state: present
+        disable_gpg_check: true
+
     - name: Restart MySQL
-      service:
+      ansible.builtin.service:
         name: mysqld
         state: restarted
 
@@ -70,9 +70,9 @@
         login_user: root
         login_password: "{{ mysql_root_password }}"
         # Use the socket to avoid "protocol mismatch" errors
-        login_unix_socket: /var/lib/mysql/mysql.sock 
-      register: mysql_server_info   
+        login_unix_socket: "/var/lib/mysql/mysql.sock"
+      register: mysql_server_info
 
-    - name:  MySQL version information
+    - name: MySQL version information
       ansible.builtin.debug:
         msg: "MySQL version: {{ mysql_server_info.version.full }}"
